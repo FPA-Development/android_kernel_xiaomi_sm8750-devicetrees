@@ -923,6 +923,7 @@
 			/* Need to update different value for V2 device */
 			qcom,freq-threshold-idx = <11>, <10>;
 			qcom,frequency-threshold-residency = <5000>, <5000>;
+			heuristics_scid_thread_interval = <16000>;
 			qcom,scid-heuristics-enabled;
 		};
 	};
