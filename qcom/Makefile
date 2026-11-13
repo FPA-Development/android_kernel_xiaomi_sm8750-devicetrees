@@ -16,7 +16,7 @@ add-overlays = $(foreach o,$1,$(foreach b,$2,$(eval $(basename $b)-$(basename $o
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
 
 SUN_BASE_DTB += sun.dtb sun-v2.dtb sun-tp.dtb sun-tp-v2.dtb
-SUN_APQ_BASE_DTB += sunp.dtb sunp-v2.dtb sunp-tp.dtb sunp-tp-v2.dtb
+SUN_APQ_BASE_DTB += sunp.dtb sunp-v2.dtb sunp-tp.dtb sunp-tp-v2.dtb sunp-iot.dtb
 
 SUN_BOARDS += \
 		sun-mtp-3.5mm-kiwi-v8-overlay.dtbo \
@@ -42,7 +42,9 @@ SUN_BOARDS += \
 		sun-rcm-overlay.dtbo \
 		sun-rcm-v8-overlay.dtbo \
 		sun-atp-overlay.dtbo \
-		sunp-hdk-overlay.dtbo
+		sunp-hdk-overlay.dtbo \
+		sunp-iot-vc-overlay.dtbo \
+		sunp-evk-overlay.dtbo
 
 NOAPQ_SUN_BOARDS += \
 		 sun-rumi-overlay.dtbo
@@ -86,6 +88,8 @@ KERA_BOARDS += \
 		kera-mtp-qca6750-ufs3-overlay.dtbo \
 		kera-mtp-qca6750-qmp1000-overlay.dtbo \
 		kera-mtp-wcn7750-qmp1000-overlay.dtbo \
+		kera-iot-mtp-wcn7750-ufs4-overlay.dtbo \
+		kera-iot-mtp-wcn7750-ufs3-overlay.dtbo \
 		kera-mtp-wcn7750-ufs4-overlay.dtbo \
 		kera-mtp-wcn7750-ufs3-overlay.dtbo \
 		kera-cdp-qca6750-ufs2-overlay.dtbo \
@@ -131,6 +135,8 @@ KERA_BOARDS += \
 		kera-mtp-qca6750-ufs3-overlay.dtbo \
 		kera-mtp-qca6750-qmp1000-overlay.dtbo \
 		kera-mtp-wcn7750-qmp1000-overlay.dtbo \
+		kera-iot-mtp-wcn7750-ufs4-overlay.dtbo \
+		kera-iot-mtp-wcn7750-ufs3-overlay.dtbo \
 		kera-mtp-wcn7750-ufs4-overlay.dtbo \
 		kera-mtp-wcn7750-ufs3-overlay.dtbo \
 		kera-cdp-qca6750-ufs2-overlay.dtbo \
@@ -259,6 +265,8 @@ RAVELIN_BOARDS += \
 		 ravelin-qrd-overlay.dtbo \
 		 montague-rumi-overlay.dtbo \
 		 montague-hsp-overlay.dtbo \
+		 montague-hsp-fp-overlay.dtbo \
+		 montague-hsp-fp2-overlay.dtbo \
 		 montague-rcm-overlay.dtbo \
 		 montague-wsa-overlay.dtbo \
 		 montague-wsd-overlay.dtbo \
