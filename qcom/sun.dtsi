@@ -2202,11 +2202,8 @@
 		status = "ok";
 	};
 
-	qcom_ramoops {
-		compatible = "qcom,ramoops";
-		memory-region = <&ramoops_mem>;
-		pmsg-size = <0x200000>;
-		mem-type = <2>;
+	logbuf: qcom,logbuf-vendor-hooks {
+		compatible = "qcom,logbuf-vendor-hooks";
 	};
 
 	qcom,mpm2-sleep-counter@c221000 {
@@ -2316,7 +2313,6 @@
 		qcom,firmware-name = "oemvm";
 		qcom,keep-running;
 		memory-region = <&oem_vm_mem &vm_comm_mem>;
-		virtio-backends = <&oem_vm_virt_be0 &oem_vm_virt_be1>;
 	};
 
 	ufsphy_mem: ufsphy_mem@1d80000 {
@@ -3969,10 +3965,9 @@
 		alignment = <0x0 0x400000>;
 	};
 
-	oem_vm_mem: oem_vm_region@f7c00000 {
-		compatible = "shared-dma-pool";
-		reg = <0x0 0xf7c00000 0x0 0x4c00000>;
-		reusable;
+	/* Carved out for the OEM VM (MiTEE); the board sets its size */
+	oem_vm_mem: oem_vm_region@f8800000 {
+		no-map;
 		alignment = <0x0 0x400000>;
 	};
 
@@ -4045,9 +4040,10 @@
 	};
 
 	ramoops_mem: ramoops-region {
-		alloc-ranges = <0x1 0x00000000 0xfffffffe 0xffffffff>;
-		size = <0x0 0x200000>;
-		no-map;
+		compatible = "ramoops";
+		reg = <0x0 0xa3500000 0x0 0x400000>;
+		console-size = <0x200000>;
+		pmsg-size = <0x200000>;
 	};
 
 	qmc_dma_mem: qmc_dma_region {
