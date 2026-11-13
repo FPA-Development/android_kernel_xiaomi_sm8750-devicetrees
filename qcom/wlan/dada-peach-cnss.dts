@@ -1,0 +1,32 @@
+// SPDX-License-Identifier: BSD-3-Clause
+
+/dts-v1/;
+/plugin/;
+
+#include "sun-peach-cnss-v8.dtsi"
+
+/*
+ * Xiaomi 15 has no QCN9224 (WKK) on PCIe0: drop the settings QTI added for
+ * the HDK WKK rework, which would otherwise apply to the on-board peach.
+ */
+/delete-node/ &qcnwlan;
+
+&cnss_wlan_mem {
+	size = <0x0 0x2000000>;
+};
+
+&cnss_pci0 {
+	/delete-property/ qrtr_instance_id;
+	/delete-property/ no-l1-supported;
+};
+
+/ {
+	model = "Qualcomm Technologies, Inc. Haotian based on SM8750";
+	compatible = "qcom,sun-mtp", "qcom,sun", "qcom,sunp-mtp", "qcom,sunp",
+		     "qcom,mtp";
+	qcom,msm-id = <618 0x10000>, <618 0x20000>, <639 0x10000>, <639 0x20000>,
+		      <0x100026a 0x10000>, <0x100026a 0x20000>,
+		      <0x100027f 0x10000>, <0x100027f 0x20000>;
+	qcom,board-id = <0x40008 0>;
+	xiaomi,miboard-id = <0x2 0>;
+};
