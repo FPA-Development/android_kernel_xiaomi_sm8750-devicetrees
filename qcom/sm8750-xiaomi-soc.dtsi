@@ -1,0 +1,277 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Changes Xiaomi made to the SM8750 SoC tree (sun.dtsi and friends) for
+ * their devices, carried as an overlay so the shared SoC files stay as
+ * released by Qualcomm wherever the change can be expressed this way.
+ */
+
+#include <dt-bindings/input/input.h>
+#include <dt-bindings/interrupt-controller/irq.h>
+#include <dt-bindings/thermal/thermal.h>
+
+/* Memory map of Xiaomi's firmware */
+&adspslpi_mem {
+	reg = <0x0 0x9ee00000 0x0 0x4580000>;
+};
+
+&xbl_ramdump_mem {
+	reg = <0x0 0xb8000000 0x0 0x200000>;
+};
+
+&trust_ui_vm_mem {
+	reg = <0x0 0xf3800000 0x0 0x5000000>;
+};
+
+&non_secure_display_memory {
+	size = <0x0 0xfc00000>;
+};
+
+&reserved_memory {
+	/* Display state dumped by the bootloader, see xiaomi,dump_display */
+	dump_display_region@81cf4000 {
+		no-map;
+		reg = <0x0 0x81cf4000 0x0 0x800>;
+	};
+};
+
+&adsp_sleepmon {
+	qcom,wait_time_lpm = <45>;
+	qcom,wait_time_lpi = <45>;
+};
+
+&qcom_pmu {
+	qcom,pmu-events-tbl =
+		< 0x0008 0xFF 0x02 0x02 >,
+		< 0x0011 0xFF 0x01 0x00 >,
+		< 0x0017 0xFF 0xFF 0x04 >,
+		< 0x0024 0xFF 0x03 0x03 >,
+		< 0x1000 0xFF 0xFF 0x08 >,
+		< 0x4005 0xFF 0x03 0x03 >;
+};
+
+&tlmm {
+	/* Touch SPI pins, owned by the trusted UI VM */
+	qcom,gpios-reserved = <36 37 38 39 74 48 49 50 51>;
+
+	tdm1_din {
+		tdm1_din_sleep: tdm1_din_sleep {
+			mux {
+				pins = "gpio122";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio122";
+				drive-strength = <2>;
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
+		tdm1_din_active: tdm1_din_active {
+			mux {
+				pins = "gpio122";
+				function = "i2s1_data0";
+			};
+
+			config {
+				pins = "gpio122";
+				drive-strength = <8>;
+				bias-disable;
+			};
+		};
+	};
+
+	tdm1_dout {
+		tdm1_dout_sleep: tdm1_dout_sleep {
+			mux {
+				pins = "gpio124";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio124";
+				drive-strength = <2>;
+				bias-pull-down;
+				input-enable;
+			};
+		};
+
+		tdm1_dout_active: tdm1_dout_active {
+			mux {
+				pins = "gpio124";
+				function = "i2s1_data1";
+			};
+
+			config {
+				pins = "gpio124";
+				drive-strength = <8>;
+				bias-disable;
+			};
+		};
+	};
+};
+
+&tdm1_clk_active {
+	config {
+		output-high;
+	};
+};
+
+&tdm1_ws_active {
+	config {
+		output-high;
+	};
+};
+
+&spmi_bus {
+	qcom,pmk8550@0 {
+		pon_hlos@1300 {
+			pwrkey-bark {
+				compatible = "qcom,pmk8350-pwrkey-bark";
+				interrupts = <0x0 0x13 0x0 IRQ_TYPE_EDGE_BOTH>;
+				linux,code = <KEY_POWER>;
+			};
+
+			pwrkey-resin-bark {
+				compatible = "qcom,pmk8350-pwrkey-resin-bark";
+				interrupts = <0x0 0x13 0x2 IRQ_TYPE_EDGE_BOTH>;
+				linux,code = <KEY_POWER>;
+			};
+		};
+	};
+};
+
+&pmic_glink {
+	/* Charging is handled by Xiaomi's mca stack instead */
+	mca_adsp_glink: mca,adsp_glink {
+		compatible = "mca,adsp_glink";
+		status = "disabled";
+	};
+};
+
+&battery_charger {
+	status = "disabled";
+};
+
+&soc {
+	qcom,smp2p-adsp {
+		/* Hall sensor (cover) state, forwarded to the ADSP */
+		hallstate_smp2p_out: hallstate-out {
+			qcom,entry-name = "hallstate";
+			#qcom,smem-state-cells = <1>;
+		};
+	};
+};
+
+&qupv3_se3_i2c {
+	fsa4480: fsa4480@42 {
+		compatible = "qcom,fsa4480-i2c";
+		reg = <0x42>;
+		status = "ok";
+	};
+};
+
+&usb0 {
+	dwc3@a600000 {
+		snps,usb2-lpm-disable;
+		snps,usb2-gadget-lpm-disable;
+	};
+};
+
+&wcd_usbss {
+	wcd-usb-sbu-compliance;
+};
+
+/* Mitigate CPU junction temperature with frequency instead of core pausing */
+&thermal_zones {
+	cpu-0-0-0 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu000_cdev {
+				cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-0-2-0 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu020_cdev {
+				cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-0-2-1 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu021_cdev {
+				cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-0-4-0 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu040_cdev {
+				cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-0-4-1 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu041_cdev {
+				cooling-device = <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-1-0-0 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu100_cdev {
+				cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-1-0-1 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu101_cdev {
+				cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-1-1-0 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu110_cdev {
+				cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+
+	cpu-1-1-1 {
+		polling-delay-passive = <4>;
+
+		cooling-maps {
+			cpu111_cdev {
+				cooling-device = <&CPU6 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
+			};
+		};
+	};
+};
