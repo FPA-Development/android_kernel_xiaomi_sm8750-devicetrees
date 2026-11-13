@@ -11,6 +11,9 @@
 #include "sm8750-ir-sensor-common.dtsi"
 #include "dada-charger-common.dtsi"
 
+/* No SoC-droop (socd) mitigation on this board */
+/delete-node/ &socd_trip;
+
 &soc {
 	xiaomi_touch {
 		compatible = "xiaomi-touch";
@@ -285,6 +288,19 @@
 		};
 	};
 
+	t1_gpio_ctl: t1_gpio_ctl {
+		mux {
+			pins = "gpio201", "gpio172";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio201", "gpio172";
+			drive-strength = <2>;
+			bias-disable;
+			output-enable;
+		};
+	};
 };
 
 &qupv3_se2_spi {
@@ -409,15 +425,24 @@
 		qts,trusted-touch-io-sizes = <0x1000>;
 		qts,trusted-touch-vm-gpio-list = <&tlmm 40 0 &tlmm 41 0 &tlmm 42 0
                                           &tlmm 43 0 &tlmm 161 0 &tlmm 162 0x2008>;
-		synaptics,config-array-size = <1>;
-		synaptics,default-thp-config-name = "dada_syna_thp_config.ini";
-		synaptics,default-fw-image-name = "synaptics_spi_dada.img";
-		synaptics,default-test-limit-name = "dada_test_limits_S3910P.csv";
+		synaptics,config-array-size = <2>;
+		synaptics,default-thp-config-name = "dada_syna_thp_config_00.ini";
+		synaptics,default-fw-image-name = "synaptics_spi_dada_00.img";
+		synaptics,default-test-limit-name = "dada_test_limits_S3910P_00.csv";
 		synpatics,cfg_0 {
-			synaptics,tp-vendor = <0x00>;
-			synaptics,thp-config-name = "dada_syna_thp_config.ini";
-			synaptics,fw-image-name = "synaptics_spi_dada.img";
-			synaptics,test-limit-name = "dada_test_limits_S3910P.csv";
+			synaptics,tp-vendor = <0x01>;
+			synaptics,thp-config-name = "dada_syna_thp_config_00.ini";
+			synaptics,fw-image-name = "synaptics_spi_dada_00.img";
+			synaptics,test-limit-name = "dada_test_limits_S3910P_00.csv";
+			synaptics,dp-vendor = <66>;
+		};
+
+		synpatics,cfg_1 {
+			synaptics,tp-vendor = <0>;
+			synaptics,dp-vendor = <69>;
+			synaptics,thp-config-name = "dada_syna_thp_config_01.ini";
+			synaptics,fw-image-name = "synaptics_spi_dada_01.img";
+			synaptics,test-limit-name = "dada_test_limits_S3910P_01.csv";
 		};
 	};
 };
@@ -829,6 +854,19 @@
                 0x03 0x59
                 0x01 0x5a
                 0x02 0x5b>;
+        qcom,param-override-seq =
+                <0x00 0x50
+                0x0A 0x51
+                0x01 0x52
+                0x01 0x53
+                0x03 0x54
+                0x03 0x55
+                0x00 0x56
+                0x03 0x57
+                0x02 0x58
+                0x03 0x59
+                0x01 0x5a
+                0x02 0x5b>;
 };
 &usb_qmp_dp_phy {
 	usb3,eyegram-tuning;
@@ -858,4 +896,31 @@
 		compatible = "xiaomi,mi_trace";
 		mt-size = <0x100000>;
 	};
+
+	mi_t1_chip {
+		compatible = "mdm,mi_t1_chip";
+		gpio-count = <2>;
+		first-gpio = <201>;
+		mi-t1-gpio-1 = <&tlmm 201 0>;
+		mi-t1-gpio-2 = <&tlmm 172 0>;
+		pinctrl-0 = <&t1_gpio_ctl>;
+	};
+};
+
+/* No microSD slot */
+&sdhc_2 {
+	status = "disabled";
+};
+
+&pmih010x_haptics {
+	qcom,vmax-mv = <2050>;
+	qcom,custom_vmax_mv = <8200>;
+	qcom,f0-vmax-mv = <2100>;
+	qcom,lra-period-us = <5882>;
+	qcom,lra-f0-default = <170>;
+	qcom,lra-f0-min = <160>;
+	qcom,lra-f0-max = <180>;
+	qcom,lra-f0-cal-count = <570>;
+	qcom,rev_t_lra_us = <70>;
+	status = "ok";
 };

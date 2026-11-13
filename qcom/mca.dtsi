@@ -106,7 +106,7 @@
 		chg_sdp = <500>;
 		chg_float = <1000>;
 		chg_batt_auth_failed = <2000>;
-		ffc_temp_low = <20>;
+		ffc_temp_low = <15>;
 		ffc_temp_high = <48>;
 		pmic_fv_compensation = <0>;
 
@@ -294,8 +294,8 @@
 			0 4000	/* ADAPTER_XIAOMI_PD_40W */
 			0 0	/* ADAPTER_VOICE_BOX */
 			0 6000	/* ADAPTER_XIAOMI_PD_50W */
-			0 10000	/* ADAPTER_XIAOMI_PD_60W */
-			0 0	/* ADAPTER_XIAOMI_PD_100W */
+			0 6000	/* ADAPTER_XIAOMI_PD_60W */
+			0 6000	/* ADAPTER_XIAOMI_PD_100W */
 		>;
 
 		adapter_cmd_type_f2 = <
@@ -314,8 +314,8 @@
 			1300 3000	/* ADAPTER_XIAOMI_PD_40W */
 			0 0	/* ADAPTER_VOICE_BOX */
 			0 4000	/* ADAPTER_XIAOMI_PD_50W */
-			0 8000	/* ADAPTER_XIAOMI_PD_60W */
-			0 0	/* ADAPTER_XIAOMI_PD_100W */
+			0 4000	/* ADAPTER_XIAOMI_PD_60W */
+			0 4000	/* ADAPTER_XIAOMI_PD_100W */
 		>;
 
 		adapter_cmd_type_f3 = <
@@ -334,8 +334,8 @@
 			850 2000	/* ADAPTER_XIAOMI_PD_40W */
 			0 0	/* ADAPTER_VOICE_BOX */
 			850 2000	/* ADAPTER_XIAOMI_PD_50W */
-			0 6000	/* ADAPTER_XIAOMI_PD_60W */
-			0 0	/* ADAPTER_XIAOMI_PD_100W */
+			850 2000	/* ADAPTER_XIAOMI_PD_60W */
+			850 2000	/* ADAPTER_XIAOMI_PD_100W */
 		>;
 
 		adapter_cmd_type_f4 = <
@@ -354,8 +354,8 @@
 			400 1000	/* ADAPTER_XIAOMI_PD_40W */
 			0 0	/* ADAPTER_VOICE_BOX */
 			400 1000	/* ADAPTER_XIAOMI_PD_50W */
-			0 4000	/* ADAPTER_XIAOMI_PD_60W */
-			0 0	/* ADAPTER_XIAOMI_PD_100W */
+			400 1000	/* ADAPTER_XIAOMI_PD_60W */
+			400 1000	/* ADAPTER_XIAOMI_PD_100W */
 		>;
 
 		adapter_cmd_type_f5 = <
@@ -389,6 +389,7 @@
 			"0x09080207", "adapter_para_9827",	/* XIAOMI_TX_UUID_ZIMI_CAR_30W */
 			"0x06020801", "adapter_para_6281",	/* XIAOMI_TX_UUID_ZIMI_CAR_20W */
 			"0x090C0201", "adapter_para_9C21",	/* XIAOMI_TX_UUID_KUKE_CAR_50W */
+			"0x0e0e0205", "adapter_para_EE25",
 			"0x0C090908", "adapter_para_C998",	/* XIAOMI_TX_UUID_MULTI_COIL2_20W */
 			"0x0C090906", "adapter_para_C996",	/* XIAOMI_TX_UUID_MULTI_COIL_20W */
 			"0x09010506", "adapter_para_9156",	/* XIAOMI_TX_UUID_MOVING_PLATE_20W */
@@ -399,9 +400,9 @@
 		low_inductance_50w_tx, low_inductance_80w_tx, support_fan, magnet_tx*/
 		adapter_para_91A1 = "1", "0", "0", "0", "0", "0", "0", "1", "0", "1", "0";
 		adapter_para_9135 = "0", "0", "0", "0", "0", "0", "0", "0", "1", "1", "0";
-		adapter_para_9194 = "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0";
-		adapter_para_919C = "0", "0", "0", "0", "0", "0", "1", "0", "0", "0", "0";
-		adapter_para_9197 = "0", "0", "0", "0", "0", "1", "0", "0", "0", "0", "0";
+		adapter_para_9194 = "0", "0", "0", "0", "0", "0", "1", "0", "0", "1", "0";
+		adapter_para_919C = "0", "0", "0", "0", "0", "0", "1", "0", "0", "1", "0";
+		adapter_para_9197 = "0", "0", "0", "0", "0", "1", "0", "0", "0", "1", "0";
 		adapter_para_11E1 = "0", "0", "0", "0", "1", "0", "0", "0", "0", "0", "0";
 		adapter_para_1825 = "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0";
 		adapter_para_9827 = "0", "0", "0", "1", "0", "0", "0", "0", "0", "0", "0";
@@ -480,11 +481,11 @@
 	connector_antiburn: connector_antiburn {
 		compatible = "xiaomi,connector_antiburn";
 		status = "disabled";
-		trigger_temp = <65>;
-		recharge_temp = <55>;
+		trigger_temp = <65000>;
+		recharge_temp = <55000>;
 		max_thermal_board_temp = <50>;
-		comb_rate_conn_trigger_temp = <35>; //The connector trigger temperature combined with temperature increase rate.
-		comb_sensorboard_con_trigger_temp = <65>; //The connector trigger temperature combined with temperature of thermal sensor board.
+		comb_rate_conn_trigger_temp = <35000>; //The connector trigger temperature combined with temperature increase rate.
+		comb_sensorboard_con_trigger_temp = <60000>; //The connector trigger temperature combined with temperature of thermal sensor board.
 	};
 
 	mca_bmd: mca_bmd {
@@ -1206,119 +1207,360 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 			"0", "16", "0x09010901", "params_l2_50W",
 			"0", "16", "0x09010407", "params_white_stand_30W",
 			"0", "16", "0x09010904", "params_k1_80W",
-			"0", "16", "0x09010A01", "params_m2_50W";
+			"0", "16", "0x09010A01", "params_m2_50W",
+			"0", "16", "0x0901010B", "params_j1s_55W",
+			"0", "16", "0x01080205", "params_zimi_car_50W",
+			"0", "16", "0x09080207", "params_zimi_car_30W",
+			"0", "16", "0x09010907", "params_redmi_disc_30W",
+			"0", "16", "0x09080108", "params_zimi_20W",
+			"0", "16", "0x09010506", "params_moving_20W",
+			"0", "16", "0x09010A07", "params_double_coil_30W",
+			"0", "16", "0x06010101", "params_white_20W",
+			"0", "16", "0x0C090908", "params_multcoil_20W",
+			"0", "16", "0x06020801", "params_zimi_car_20W",
+			"0", "16", "0x09080607", "params_bluetooth_30W",
+			"0", "16", "0x07030801", "params_power_bank_30W";
 		/* gain, offset */
 		params_k8_100W = /bits/ 8 <
-			118  24
-			115  22
-			170  220
-			113  64
-			98   94
-			155  236
-			131  42
-			134  12
-			134  12
-			121  84
-			152  190
-			125  40
-			125  40
-			126  32
-			106  82
-			118  4
+			81  59
+			81  66
+			185  219
+			197  181
+			84   100
+			178  185
+			150  226
+			177  155
+			128  32
+			126  37
+			129  24
+			108  100
+			142  229
+			159  155
+			147  209
+			156  160
 		>;
 
 		params_low_inductance_80w = /bits/ 8 <
-			135  242
-			144  236
-			104  29
-			120  250
-			124  228
-			119  0
-			119  250
-			119  246
-			113  46
-			121  84
-			152  190
-			125  40
-			125  40
-			126  32
-			106  82
-			118  4
+			110  16
+			115  20
+			120  19
+			120  18
+			124  18
+			124  30
+			124  17
+			124  17
+			124  20
+			125  20
+			124  4
+			124  10
+			125  10
+			125  10
+			125  10
+			125  10
 		>;
 
 		params_l2_50W = /bits/ 8 <
-			21   50
-			168  248
-			83   56
-			165  240
-			151  248
-			123  50
-			116  74
-			123  52
-			123  52
-			142  216
-			123  8
-			110  108
-			110  108
-			110  108
-			110  108
-			110  108
+			70   55
+			85  79
+			104  70
+			101  75
+			103  80
+			110  70
+			110  67
+			108  80
+			103  89
+			111  80
+			113  67
+			110  90
+			120  45
+			120  39
+			120  39
+			124  20
 		>;
 
 		params_white_stand_30W = /bits/ 8 <
-			112  32
-			123  56
-			120  56
-			120  56
-			172  180
-			133  40
-			133  40
-			109  106
-			109  106
-			109  106
-			109  112
-			109  112
-			110  108
-			110  108
-			110  108
+			118  50
+			121  48
+			121  49
+			125  46
+			126  49
+			126  40
+			126  42
+			126  41
+			126  39
+			126  38
+			126  36
+			126  36
+			126  36
+			126  36
+			126  36
+			125  20
 		>;
 
 		params_k1_80W = /bits/ 8 <
-			121  38
-			116  36
-			153  6
-			154  0
-			98   94
-			155  236
-			131  42
-			127  60
-			118  112
-			118  112
-			116  118
-			120  106
-			120  106
-			126  32
-			106  82
-			118  4
+			70  70
+			92  70
+			100  67
+			100  75
+			110  70
+			115  65
+			117  60
+			117  65
+			117  65
+			117  70
+			118  70
+			120  65
+			123  65
+			127  50
+			128  42
+			128  35
 		>;
 
 		params_m2_50W = /bits/ 8 <
-			186  60
-			116  78
-			127  92
-			100  132
-			90   100
-			101  110
-			100  110
-			107  115
-			118  112
-			118  112
-			116  118
-			120  106
-			120  106
-			126  32
-			106  82
-			118  4
+			128  60
+			126  45
+			125  48
+			125  48
+			125  40
+			125  40
+			128  40
+			128  46
+			128  48
+			128  45
+			128  40
+			128  40
+			129  40
+			129  50
+			129  60
+			129  70
+		>;
+
+		params_bluetooth_30W = /bits/ 8 <
+			128  32
+			138  40
+			128  38
+			125  37
+			125  33
+			126  40
+			144  2
+			129  40
+			153  215
+			149  222
+			149  215
+			127  40
+			128  60
+			128  60
+			128  60
+			128  60
+		>;
+
+		params_double_coil_30W = /bits/ 8 <
+			128  40
+			127  34
+			127  34
+			127  34
+			126  34
+			125  38
+			125  38
+			124  41
+			124  43
+			123  40
+			126  36
+			126  36
+			128  40
+			128  40
+			128  40
+			128  40
+		>;
+
+		params_j1s_55W = /bits/ 8 <
+			39   99
+			123  63
+			172  247
+			148  24
+			141  33
+			159  245
+			136  33
+			109  100
+			111  100
+			175  165
+			114  100
+			141  4
+			124  66
+			116  100
+			126  48
+			112  100
+		>;
+
+		params_moving_20W = /bits/ 8 <
+			122  30
+			121  32
+			123  22
+			126  21
+			126  27
+			126  27
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+			122  24
+		>;
+
+		params_multcoil_20W = /bits/ 8 <
+			120  25
+			120  10
+			120  15
+			120  20
+			102  19
+			111  25
+			123  25
+			123  30
+			129  15
+			124  20
+			126  20
+			126  20
+			112  40
+			112  40
+			112  40
+			112  40
+		>;
+
+		params_power_bank_30W = /bits/ 8 <
+			120  25
+			120  10
+			120  15
+			120  24
+			102  29
+			111  35
+			123  35
+			123  40
+			129  25
+			124  40
+			126  40
+			126  40
+			112  40
+			112  40
+			112  40
+			112  40
+		>;
+
+		params_redmi_disc_30W = /bits/ 8 <
+			125  30
+			118  35
+			120  30
+			120  30
+			120  44
+			121  40
+			121  40
+			121  40
+			121  40
+			122  40
+			122  40
+			124  32
+			126  42
+			128  42
+			127  42
+			126  42
+		>;
+
+		params_white_20W = /bits/ 8 <
+			128  10
+			128  10
+			128  10
+			128  10
+			128  31
+			128  31
+			128  34
+			128  34
+			128  35
+			128  35
+			128  35
+			128  35
+			128  40
+			128  40
+			128  40
+			128  40
+		>;
+
+		params_zimi_20W = /bits/ 8 <
+			120  30
+			124  45
+			127  40
+			127  40
+			127  40
+			127  40
+			128  40
+			127  40
+			128  40
+			128  40
+			128  40
+			128  40
+			128  40
+			128  40
+			128  40
+			128  40
+		>;
+
+		params_zimi_car_20W = /bits/ 8 <
+			120  25
+			120  10
+			120  15
+			120  20
+			102  19
+			111  25
+			123  25
+			123  30
+			129  15
+			124  20
+			126  20
+			126  20
+			112  40
+			112  40
+			112  40
+			112  40
+		>;
+
+		params_zimi_car_30W = /bits/ 8 <
+			128  40
+			127  34
+			127  34
+			127  34
+			126  34
+			125  38
+			125  38
+			124  41
+			124  43
+			123  40
+			126  36
+			126  36
+			128  40
+			128  40
+			128  40
+			128  40
+		>;
+
+		params_zimi_car_50W = /bits/ 8 <
+			120  25
+			120  10
+			120  15
+			120  20
+			102  19
+			111  25
+			123  25
+			123  30
+			129  15
+			124  20
+			126  20
+			126  20
+			112  40
+			112  40
+			112  40
+			112  40
 		>;
 	};
 
@@ -1335,5 +1577,36 @@ mca_sc96281_fod_data: mca_sc96281_fod_data {
 		vbat_ovp_recharge_delta = <50>;
 		fg_type = <0>;
 		status = "disabled";
+	};
+
+	mca_buckchg_jeita_tmp_para: mca_buckchg_jeita_tmp_para {
+		volt_para1 = "4200", "670", "4500", "450";
+		volt_para2 = "4200", "900", "4500", "670";
+		volt_para3 = "4200", "1350", "4500", "900";
+		jeita_para =
+			"-65535", "-10", "0", "2", "0", "4100", "500", "null",
+			"-10", "0", "1", "2", "670", "4500", "230", "volt_para1",
+			"0", "5", "1", "2", "900", "4100", "230", "volt_para2",
+			"5", "10", "1", "2", "1350", "4500", "500", "volt_para3",
+			"10", "48", "2", "2", "4000", "4500", "230", "null",
+			"48", "60", "2", "2", "2250", "4100", "230", "null",
+			"60", "65535", "2", "2", "0", "4100", "230", "null";
+	};
+
+	mca_ibat_ocp_mon: mca_ibat_ocp_mon {
+		compatible = "mca,ibat_ocp_monitor";
+		fg_type = <1>;
+		status = "disabled";
+		ocp_threshold = <9280000 3540000>;
+	};
+
+	mca_parallel_cyclecount_para: mca_parallel_cyclecount_para {
+	};
+
+	mca_platform_loadsw: mca_platform_loadsw {
+		compatible = "mca,platform_loadsw";
+		status = "disabled";
+		loadsw-num = <1>;
+		loadsw-dir-list = "loadsw_master";
 	};
 };
