@@ -14,7 +14,6 @@ dtbo-$(CONFIG_ARCH_SUN) += display/sun-sde.dtbo \
 		display/sun-sde-display-cdp-nfc-overlay.dtbo \
 		display/sun-sde-display-mtp-nfc-overlay.dtbo \
 		display/sun-sde-display-cdp-v8-overlay.dtbo \
-		display/sun-sde-display-mtp-v8-overlay.dtbo \
 		display/sun-sde-display-atp-overlay.dtbo \
 		display/sun-sde-display-mtp-3-5mm-overlay.dtbo \
 		display/sun-sde-display-rcm-kiwi-overlay.dtbo \
