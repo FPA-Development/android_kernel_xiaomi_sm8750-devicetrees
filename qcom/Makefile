@@ -13,6 +13,14 @@ add-overlays = $(foreach o,$1,$(foreach b,$2,$(eval $(basename $b)-$(basename $o
 # see DTB_TYPES from scripts/Makefile.dtbinst and install_dtbs from build.config.msm.common
 #
 
+ifeq ($(CONFIG_DADA_DTB),y)
+# Xiaomi 15 (dada): its board overlay and the SoC base trees it applies to.
+# The bootloader applies the overlay itself, so no combined trees are built.
+dtb-y += dada-sm8750-overlay.dtbo \
+	sun.dtb sun-v2.dtb sun-tp.dtb sun-tp-v2.dtb \
+	sunp.dtb sunp-v2.dtb sunp-tp.dtb sunp-tp-v2.dtb
+else
+
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
 
 SUN_BASE_DTB += sun.dtb sun-v2.dtb sun-tp.dtb sun-tp-v2.dtb
@@ -39,7 +47,6 @@ SUN_BOARDS += \
 		sun-qrd-sku2-v8-overlay.dtbo \
 		sun-rcm-kiwi-overlay.dtbo \
 		sun-rcm-kiwi-v8-overlay.dtbo \
-		dada-sm8750-overlay.dtbo \
 		sun-rcm-overlay.dtbo \
 		sun-rcm-v8-overlay.dtbo \
 		sun-atp-overlay.dtbo \
@@ -440,6 +447,8 @@ dtb-y += $(parrot_tuivm-dtb-y)
 
 endif
 endif
+
+endif # CONFIG_DADA_DTB
 
 always-y        := $(dtb-y)
 subdir-y        := $(dts-dirs)
