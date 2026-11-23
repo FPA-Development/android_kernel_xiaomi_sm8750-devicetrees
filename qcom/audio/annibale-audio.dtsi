@@ -1,0 +1,564 @@
+// SPDX-License-Identifier: BSD-3-Clause
+/*
+ * Copyright (c) 2025 Xiaomi Corporation.
+ */
+
+&tlmm {
+	tfa_reset_default_0: tfa_reset_default_0 {
+		mux {
+			pins = "gpio107";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio107";
+			drive-strength = <16>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	tfa_reset_default_1: tfa_reset_default_1 {
+		mux {
+			pins = "gpio108";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio108";
+			drive-strength = <16>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	tfa_irq_default {
+		tfa_irq_default_0: tfa_irq_default_0 {
+			mux {
+				pins = "gpio84";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio84";
+				drive-strength = <2>;
+				input-enable;
+				bias-pull-up;
+			};
+		};
+
+		tfa_irq_default_1: tfa_irq_default_1 {
+			mux {
+				pins = "gpio66";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio66";
+				drive-strength = <2>;
+				input-enable;
+				bias-pull-up;
+			};
+		};
+	};
+
+	rcv_gpio_high: rcv_gpio_high {
+		mux {
+			pins = "gpio67";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio67";
+			drive-strength = <2>;
+			bias-pull-up;
+			output-high;
+		};
+	};
+
+	rcv_gpio_low: rcv_gpio_low {
+		mux {
+			pins = "gpio67";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio67";
+			drive-strength = <2>;
+			bias-disable;
+			output-low;
+		};
+	};
+
+	sia91xx_gpio_L: sia91xx_gpio_L {
+		mux {
+			pins = "gpio108", "gpio108";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio108", "gpio108";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	sia91xx_gpio_R: sia91xx_gpio_R {
+		mux {
+			pins = "gpio107", "gpio107";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio107", "gpio107";
+			drive-strength = <6>;
+			bias-disable;
+		};
+	};
+
+	sbu_uart_en_ctrl {
+		uart_audio_en_idle: uart_audio_en_idle {
+			mux {
+				pins = "gpio60";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio60";
+				drive-strength = <2>;
+				bias-pull-down;
+				output-low;
+			};
+		};
+
+		uart_audio_en_active: uart_audio_en_active {
+			mux {
+				pins = "gpio60";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio60";
+				drive-strength = <2>;
+				bias-disable;
+				output-high;
+			};
+		};
+	};
+
+	tdm1_clk_sleep: tdm1_clk_sleep {
+		mux {
+			pins = "gpio121";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio121";
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	tdm1_clk_active: tdm1_clk_active {
+		mux {
+			pins = "gpio121";
+			function = "i2s1_sck";
+		};
+
+		config {
+			pins = "gpio121";
+			drive-strength = <8>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	tdm1_ws_sleep: tdm1_ws_sleep {
+		mux {
+			pins = "gpio123";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio123";
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	tdm1_ws_active: tdm1_ws_active {
+		mux {
+			pins = "gpio123";
+			function = "i2s1_ws";
+		};
+
+		config {
+			pins = "gpio123";
+			drive-strength = <6>;
+			bias-disable;
+			output-high;
+		};
+	};
+
+	tdm1_din_sleep: tdm1_din_sleep {
+		mux {
+			pins = "gpio122";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio122";
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	tdm1_din_active: tdm1_din_active {
+		mux {
+			pins = "gpio122";
+			function = "i2s1_data0";
+		};
+
+		config {
+			pins = "gpio122";
+			drive-strength = <8>;
+			bias-disable;
+		};
+	};
+
+	tdm1_dout_sleep: tdm1_dout_sleep {
+		mux {
+			pins = "gpio124";
+			function = "gpio";
+		};
+
+		config {
+			pins = "gpio124";
+			drive-strength = <2>;
+			bias-pull-down;
+			input-enable;
+		};
+	};
+
+	tdm1_dout_active: tdm1_dout_active {
+		mux {
+			pins = "gpio124";
+			function = "i2s1_data1";
+		};
+
+		config {
+			pins = "gpio124";
+			drive-strength = <8>;
+			bias-pull-down;
+		};
+	};
+
+	cdc_dmic_enable_pinctrl {
+		cdc_dmic01_enable_active: cdc_dmic01_enable_active {
+			mux {
+				pins = "gpio183";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio183";
+				drive-strength = <8>;
+				bias-pull-up;
+				output-high;
+			};
+		};
+
+		cdc_dmic01_enable_sleep: cdc_dmic01_enable_sleep {
+			mux {
+				pins = "gpio183";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio183";
+				drive-strength = <2>;
+				bias-disable;
+				output-low;
+			};
+		};
+
+		cdc_dmic23_enable_active: cdc_dmic23_enable_active {
+			mux {
+				pins = "gpio182";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio182";
+				drive-strength = <8>;
+				bias-pull-up;
+				output-high;
+			};
+		};
+
+		cdc_dmic23_enable_sleep: cdc_dmic23_enable_sleep {
+			mux {
+				pins = "gpio182";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio182";
+				drive-strength = <2>;
+				bias-disable;
+				output-low;
+			};
+		};
+
+		cdc_dmic45_enable_active: cdc_dmic45_enable_active {
+			mux {
+				pins = "gpio183";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio183";
+				drive-strength = <8>;
+				bias-pull-up;
+				output-high;
+			};
+		};
+
+		cdc_dmic45_enable_sleep: cdc_dmic45_enable_sleep {
+			mux {
+				pins = "gpio183";
+				function = "gpio";
+			};
+
+			config {
+				pins = "gpio183";
+				drive-strength = <2>;
+				bias-disable;
+				output-low;
+			};
+		};
+	};
+};
+
+&soc {
+	sbu_uart_en: msm_cdc_pinctrl@60 {
+		compatible = "qcom,msm-cdc-pinctrl";
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&uart_audio_en_active>;
+		pinctrl-1 = <&uart_audio_en_idle>;
+		#gpio-cells = <0>;
+	};
+
+	cdc_sec_tdm_gpios: sec_tdm_pinctrl {
+		compatible = "qcom,msm-cdc-pinctrl";
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&tdm1_clk_active &tdm1_ws_active &tdm1_din_active &tdm1_dout_active>;
+		pinctrl-1 = <&tdm1_clk_sleep &tdm1_ws_sleep &tdm1_din_sleep &tdm1_dout_sleep>;
+		#gpio-cells = <0>;
+		status = "ok";
+	};
+
+	cdc_dmic_enable_pinctrl: cdc_dmic_enable_pinctrl {
+		compatible = "qcom,msm-cdc-pinctrl";
+		pinctrl-names = "aud_active", "aud_sleep";
+		pinctrl-0 = <&cdc_dmic01_enable_active &cdc_dmic23_enable_active>;
+		pinctrl-1 = <&cdc_dmic01_enable_sleep &cdc_dmic23_enable_sleep>;
+		#gpio-cells = <0>;
+	};
+
+	si_pa_L: si_pa_L {
+		compatible = "si,sia91xx";
+		si,si_pa_type = "sia9197x";
+		si,si_pa_reset = <&tlmm 108 0>;
+		pinctrl-names = "si_pa_gpio";
+		pinctrl-0 = <&sia91xx_gpio_L>;
+		si,is_digital_pa = <1>;
+		si,si_pa_disable_pin = <0>;
+		channel_num = <0>;
+		spksw-gpio = <&tlmm 67 0>;
+	};
+
+	si_pa_R: si_pa_R {
+		compatible = "si,sia91xx";
+		si,si_pa_type = "sia9197x";
+		si,si_pa_reset = <&tlmm 107 0>;
+		pinctrl-names = "si_pa_gpio";
+		pinctrl-0 = <&sia91xx_gpio_R>;
+		si,is_digital_pa = <1>;
+		si,si_pa_disable_pin = <0>;
+		channel_num = <1>;
+	};
+};
+
+&qupv3_hub_i2c0 {
+	status = "ok";
+
+	sipa_i2c_L: sipa_i2c_L@6E {
+		compatible = "si,sia91xx-i2c";
+		reg = <0x6e>;
+		si,sipa-dev = <&si_pa_L>;
+		sound-name-prefix = "SpkrLeft";
+	};
+
+	sipa_i2c_R: sipa_i2c_R@6C {
+		compatible = "si,sia91xx-i2c";
+		reg = <0x6c>;
+		si,sipa-dev = <&si_pa_R>;
+		sound-name-prefix = "SpkrRight";
+	};
+
+	tfa98xx_1@36 {
+		compatible = "tfa,tfa98xx";
+		status = "ok";
+		reg = <0x36>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		reset-gpio = <&tlmm 108 0>;
+		reset-polarity = <0>;
+		irq-gpio = <&tlmm 66 0>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <66 0x2008>;
+		interrupt-names = "smartpa_irq";
+		pinctrl-names = "rcv_gpio_high", "rcv_gpio_low";
+		pinctrl-0 = <&rcv_gpio_high>;
+		pinctrl-1 = <&rcv_gpio_low>;
+		spk-sw-gpio = <&tlmm 67 0>;
+	};
+
+	tfa98xx_2@34 {
+		compatible = "tfa,tfa98xx";
+		status = "ok";
+		reg = <0x34>;
+		cdc-vdd-1p8-supply = <&L15B>;
+		reset-gpio = <&tlmm 107 0>;
+		reset-polarity = <0>;
+		irq-gpio = <&tlmm 84 0>;
+		interrupt-parent = <&tlmm>;
+		interrupts = <84 0x2008>;
+		interrupt-names = "smartpa_irq";
+	};
+};
+
+&lpass_cdc {
+	qcom,num-macros = <5>;
+};
+
+&fm_i2s1_gpios {
+	status = "disabled";
+};
+
+&cdc_dmic01_gpios {
+	status = "ok";
+};
+
+&cdc_dmic23_gpios {
+	status = "ok";
+};
+
+&cdc_dmic45_gpios {
+	status = "ok";
+};
+
+&wcd939x_codec {
+	status = "disabled";
+};
+
+&wcd_usbss {
+	status = "disabled";
+};
+
+&wsa_macro {
+	status = "ok";
+};
+
+&swr0 {
+	status = "disabled";
+};
+
+&wsa883x_0221 {
+	/delete-property/ qcom,cdc-vdd-1p8-lpm-supported;
+	status = "disabled";
+};
+
+&wsa883x_0222 {
+	/delete-property/ qcom,cdc-vdd-1p8-lpm-supported;
+	status = "disabled";
+};
+
+&wsa2_macro {
+	status = "ok";
+};
+
+&swr3 {
+	status = "ok";
+};
+
+&swr_haptics {
+	status = "ok";
+};
+
+&wsa883x_2_0221 {
+	/delete-property/ qcom,cdc-vdd-1p8-lpm-supported;
+};
+
+&wsa883x_2_0222 {
+	/delete-property/ qcom,cdc-vdd-1p8-lpm-supported;
+};
+
+&wsa_spkr_en02 {
+	status = "disabled";
+};
+
+&wsa_spkr_en13 {
+	status = "disabled";
+};
+
+&lpass_bt_swr {
+	status = "ok";
+};
+
+&sun_snd {
+	qcom,model = "sun-mtp-snd-card";
+	asoc-codec = <&stub_codec>, <&lpass_cdc>,
+		     <&wcd939x_codec>, <&swr_haptics>;
+	asoc-codec-names = "msm-stub-codec.1",
+			   "lpass-cdc",
+			   "wcd939x_codec",
+			   "swr-haptics";
+	qcom,audio-routing =
+		"TX DMIC0", "Digital Mic0",
+		"TX DMIC1", "Digital Mic1",
+		"TX DMIC2", "Digital Mic2",
+		"TX DMIC3", "Digital Mic3",
+		"TX DMIC4", "Digital Mic4",
+		"TX DMIC5", "Digital Mic5",
+		"HAP_IN", "WSA2_HAPT OUT",
+		"RX_TX DEC0_INP", "TX DEC0 MUX",
+		"RX_TX DEC1_INP", "TX DEC1 MUX",
+		"RX_TX DEC2_INP", "TX DEC2 MUX",
+		"RX_TX DEC3_INP", "TX DEC3 MUX",
+		"VA SWR_INPUT", "VA_SWR_CLK",
+		"VA_AIF1 CAP", "VA_SWR_CLK",
+		"VA_AIF2 CAP", "VA_SWR_CLK",
+		"VA_AIF3 CAP", "VA_SWR_CLK",
+		"VA DMIC0", "Digital Mic0",
+		"VA DMIC1", "Digital Mic1",
+		"VA DMIC2", "Digital Mic2",
+		"VA DMIC3", "Digital Mic3",
+		"VA DMIC4", "Digital Mic4",
+		"VA DMIC5", "Digital Mic5";
+	qcom,wcd-disabled = <1>;
+	qcom,msm-mbhc-usbc-audio-supported = <0>;
+	qcom,sec-mi2s-gpios = <&cdc_sec_tdm_gpios>;
+	qcom,uart-audio-sw-gpio = <&sbu_uart_en>;
+	qcom,cdc-dmic-enable-gpios = <&cdc_dmic_enable_pinctrl>;
+	qcom,tdm-audio-intf = <1>;
+	qcom,tdm-clk-attribute = <4 4 4 4 4 4 4 4>;
+	qcom,tdm-max-slots = <2>;
+	/delete-property/ qcom,wcn-bt-ext;
+	/delete-property/ qcom,wcd-disable-legacy-surge;
+	/delete-property/ wcd939x-i2c-handle;
+	qcom,wsa-max-devs = <0>;
+};
