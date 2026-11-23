@@ -19,6 +19,12 @@ ifeq ($(CONFIG_DADA_DTB),y)
 dtb-y += dada-sm8750-overlay.dtbo \
 	sun.dtb sun-v2.dtb sun-tp.dtb sun-tp-v2.dtb \
 	sunp.dtb sunp-v2.dtb sunp-tp.dtb sunp-tp-v2.dtb
+else ifeq ($(CONFIG_ANNIBALE_DTB),y)
+# POCO F8 Pro (annibale): its board overlay and the SoC base trees it applies to.
+# The bootloader applies the overlay itself, so no combined trees are built.
+dtb-y += annibale-sm8750-overlay.dtbo \
+	sun.dtb sun-v2.dtb sun-tp.dtb sun-tp-v2.dtb \
+	sunp.dtb sunp-v2.dtb sunp-tp.dtb sunp-tp-v2.dtb
 else
 
 ifneq ($(CONFIG_ARCH_QTI_VM), y)
@@ -448,7 +454,7 @@ dtb-y += $(parrot_tuivm-dtb-y)
 endif
 endif
 
-endif # CONFIG_DADA_DTB
+endif # CONFIG_DADA_DTB / CONFIG_ANNIBALE_DTB
 
 always-y        := $(dtb-y)
 subdir-y        := $(dts-dirs)
