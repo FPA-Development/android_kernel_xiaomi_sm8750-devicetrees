@@ -110,6 +110,7 @@
 
 &mca_protocol_pd_class {
 	status = "ok";
+	support_mode = <4>;
 	max_power = <100>;
 };
 
@@ -123,12 +124,20 @@
 
 &mca_strategy_buckchg_class {
 	status = "ok";
+	ffc_temp_low = <20>;
+	pmic_fv_compensation = <0>;
+	pmic_wls_fv_compensation = <0>;
+	pmic_iterm_compensation = <30>;
+	allow_start_ffc_batt_soc_thr = <95>;
+	vusb_ovp_location = <1>;
+	support_pps_100w = <3>;
 	//pps&pd_verify, other
 	rev_req_vadp = <6800 9000>;
 	rev_vadp_valid_h = <7200 9200>;
 	rev_vadp_valid_l = <6000 8400>;
+	sw_cv_fcc_step = <50>;
+	sw_cv_fv_step = <5>;
 	support_reverse_quick_charge;
-	pmic_fv_compensation = <0>;
 	sw_cv_fcc_limit_buffer = <20>;
 	ffc_terminated_by_cp = <1>;
 	curr_terminate_compensation = <700>;
@@ -142,8 +151,13 @@
 	div_single_curr = <5000 12000 17600>;
 	div_delta_volt = <300 300 600>;
 	div_max_curr = <5000 12000 17600>;
+	again_multi_ibus_th = <3500 3000 1000>;
 	max_power = <100000>;
 	qc_normal_charge_fv = <4510>;
+	qc_taper_soc_thr = <100>;
+	quick_chg_fv_hys = <1>;
+	mult_to_single_count = <0>;
+	non_mi_pps_max_curr = <4500 11000 17600>;
 	en_buck_parallel_chg = <1>;
 	fv_hys_delta_mv = <8>;
 	curr_terminate_ratio = <120>;
@@ -378,6 +392,8 @@
 	vcutoff_shutdown_delay = <2850>;
 	vcutoff_sw = <2800>;
 	vcutoff_fw = <2850>;
+	vterm_delta = <7>;
+	support_fl4p0 = <0>;
 	support-cc-vcutoff;
 	support-vpack-low-shutdown;
 	cc_vcutoff_cfg =
@@ -568,7 +584,33 @@
 	800 100
 	65536 200>;
 	enable_fv_dec_by_cc = <1>;
+	support_csd = <0>;
 	smart_bypass_support = <1>;
+	smart_bypass_entry_soc = <5>;
+	smart_bypass_high_lmt_cfg = <
+		(-100) 150 5 5 3000
+		151 200 5 5 2500
+		201 250 5 5 2000
+		251 300 5 5 1500
+		301 370 5 5 1000
+		371 800 5 5 1000
+	>;
+	smart_bypass_med_lmt_cfg = <
+		(-100) 150 5 5 17600
+		151 200 5 5 17600
+		201 250 5 5 17600
+		251 300 5 5 8000
+		301 370 5 5 5000
+		371 800 5 5 2000
+	>;
+	smart_bypass_low_lmt_cfg = <
+		(-100) 150 5 5 17600
+		151 200 5 5 17600
+		201 250 5 5 17600
+		251 300 5 5 9000
+		301 370 5 5 6000
+		371 800 5 5 3000
+	>;
 };
 
 &soc_limit {
@@ -712,6 +754,9 @@
 &mca_vbat_ovp_mon {
 	vbat_ovp_threshold_ffc = <4580>;
 	vbat_ovp_threshold_normal = <4530>;
+	vbat_ovp_threshold_hys = <15>;
+	vbat_ovp_recharge_delta = <50>;
+	fg_type = <0>;
 	status = "ok";
 };
 
